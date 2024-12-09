@@ -10,20 +10,31 @@ toc: true
 
 使用VirtualBox + Centos 搭建自己的k8s集群
 <!-- more -->
+本文介绍使用VirtualBox + Vagrant + Centos7 搭建一个三节点的k8s集群。
 
-# 【1】搭建k8s集群
+**目标**
+
+- 了解VirtualBox的安装方式
+- 了解Vagrant的使用方式
+- 了解k8s部署步骤
+- 使用k8s拉起mysql一主一从集群
+
+有多种方式可以部署个人的k8s集群，根据部署复杂度从低到高，包括：
+
+- kind（[官方网站](https://kind.sigs.k8s.io/)）
+- minikube（[官方网站](https://minikube.sigs.k8s.io/docs/tutorials/multi_node/)）
+- 虚拟机
+- 物理机
+
+kind、minikube安装简单，根据官网步骤即可，但不适合生产环境。个人使用物理机部署，成本高昂。因此选择使用虚拟机部署。该方法也适合于其他集群的个人部署（如zookeeper，kafka等）
 
 # 1 环境准备
 
-k8s搭建方式：
-
-kind
-minikube
-虚拟机
-
-采用虚拟机部署，更加接近真实场景。
+上文（xxx）我们介绍了使用VirtualBox + Vagrant创建出3台centos虚拟机。
 
 ## 1.1 主机准备
+
+事先规划节点数量，节点规格，节点ip。这里我的规划如下：
 
 - 3台centos7 虚拟机
     - ip列表
@@ -34,8 +45,7 @@ minikube
     192.168.33.12
     ```
     
-    - 规格：2C4G
-    - 节点互相ping通，能访问外网
+    - 规格：2C4G    
 
 ## 1.2 集群规划
 
@@ -62,9 +72,9 @@ minikube
     
 
 # 2 安装步骤
+以下步骤需要在三台虚拟机上分别执行。
 
 ## 2.1 关闭防火墙
-
 ```bash
 systemctl stop firewalld && systemctl disable firewalld
 ```
@@ -74,6 +84,7 @@ systemctl stop firewalld && systemctl disable firewalld
 ```sql
 stop iptables && systemctl disable iptables
 ```
+上述两个步骤，主要是为了避免网络影响。其中firewalld是防火墙服务，iptables用于配置能访问主机的ip白名单
 
 ## 2.3 关闭SELINUX
 
@@ -82,12 +93,14 @@ sestatus
 sed -i s#SELINUX=enforcing#SELINUX=disabled# /etc/selinux/config
 reboot
 ```
+上述步骤主要为了xxx
 
 ## 2.4 关闭交换分区
 
 ```bash
 swapoff -a && sed -ri 's/.swap.*/#&/' /etc/fstab
 ```
+交换分区会影响服务性能，一般云上主机都要关闭交换分区
 
 ## 2.5 yum更换国内源
 
@@ -98,6 +111,7 @@ curl -o /etc/yum.repos.d/CentOS-Base.repo https://mirrors.aliyun.com/repo/Centos
 
 yum makecache
 ```
+指定yum的仓库地址为阿里云
 
 ## 2.6 同步服务时间
 
