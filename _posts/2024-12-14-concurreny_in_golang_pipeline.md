@@ -579,7 +579,7 @@ func (c *ConcurrentPipeline) Stop() {
 }
 ```
 
-[https://github.com/xiaodp/xiaodp.github.io/tree/main/src/golang/](完整代码)
+[完整代码](https://github.com/xiaodp/xiaodp.github.io/tree/main/src/golang/)
 ### 参考文献
 
 [https://ketansingh.me/posts/pipeline-pattern-in-go-part-2/](https://ketansingh.me/posts/pipeline-pattern-in-go-part-2/)
