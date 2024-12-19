@@ -13,11 +13,9 @@ toc: true
 
 ## 引子
 
-先考虑一个简单的问题。一个任务包含4个步骤，需要依次执行：
+先考虑一个简单的问题：一个任务包含4个步骤，需要依次执行：
 
-![image.png](https://raw.githubusercontent.com/xiaodp/xiaodp.github.io/master/2024-12-14-concurreny_in_golang_pipeline/image.png)
-
-![image.png](https://raw.githubusercontent.com/xiaodp/xiaodp.github.io/master/2024-12-14-concurreny_in_golang_pipeline/image%201.png)
+![image.png](https://raw.githubusercontent.com/xiaodp/xiaodp.github.io/main/images/2024-12-14-concurreny_in_golang_pipeline/image.png)
 
 输入input，依次经过step1，step2，step3，step4后，处理完毕，输出output
 
@@ -28,6 +26,7 @@ for step in {step1~4}
     input = output
 ```
 
+![image.png](https://raw.githubusercontent.com/xiaodp/xiaodp.github.io/main/images/2024-12-14-concurreny_in_golang_pipeline/image%201.png)
 现在需要处理多个input, 最直接的方法如下：
 
 ```yaml
@@ -41,7 +40,7 @@ for input in {input1, input2, input3}
 
 执行过程如下图：
 
-![image.png](https://raw.githubusercontent.com/xiaodp/xiaodp.github.io/master/2024-12-14-concurreny_in_golang_pipeline/image%202.png)
+![image.png](https://raw.githubusercontent.com/xiaodp/xiaodp.github.io/main/images/2024-12-14-concurreny_in_golang_pipeline/image%202.png)
 
 当然，你会想到使用并发来优化性能。如
 
@@ -85,7 +84,7 @@ for step in {step1~4}
 
 现在我们来介绍另一种方式：Pipeline模式
 
-![image.png](https://raw.githubusercontent.com/xiaodp/xiaodp.github.io/master/2024-12-14-concurreny_in_golang_pipeline/image%203.png)
+![image.png](https://raw.githubusercontent.com/xiaodp/xiaodp.github.io/main/images/2024-12-14-concurreny_in_golang_pipeline/image%203.png)
 
 在Go语言中，管道（Pipeline）是一种编程模式，用于将数据处理分成多个独立的阶段，每个阶段通过channel进行通信。每个阶段通常在一个独立的goroutine中运行，数据从一个阶段流向下一个阶段，形成一个数据处理流水线。所谓“阶段”，可以理解为组成pipeline的单元，负责输入→ 处理 → 输出。
 
@@ -263,8 +262,6 @@ for v := range pipeline {
     
 
 ## 更加通用的Pipeline库
-
-todo：代码地址
 
 现在我们来设计一个更加实用的Pipeline库。这个库需要包含如下要素
 
@@ -561,7 +558,7 @@ func main() {
 
 整个过程如下
 
-![image.png](https://raw.githubusercontent.com/xiaodp/xiaodp.github.io/master/2024-12-14-concurreny_in_golang_pipeline/image%204.png)
+![image.png](https://raw.githubusercontent.com/xiaodp/xiaodp.github.io/main/images/2024-12-14-concurreny_in_golang_pipeline/image%204.png)
 
 思考：
 
@@ -582,9 +579,7 @@ func (c *ConcurrentPipeline) Stop() {
 }
 ```
 
+[https://github.com/xiaodp/xiaodp.github.io/tree/main/src/golang]完整代码
 ### 参考文献
 
 [https://ketansingh.me/posts/pipeline-pattern-in-go-part-2/](https://ketansingh.me/posts/pipeline-pattern-in-go-part-2/)
-
-### 完整代码
-https://github.com/xiaodp/xiaodp.github.io/tree/main/src/golang
