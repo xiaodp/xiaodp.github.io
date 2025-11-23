@@ -315,111 +315,114 @@ img {
 /*********************/
 
 //
-// .sidebar
+// Top navigation
 //
 
-.wrapper-sidebar {
-  width: 30%;
-	-webkit-background-size: cover;
-	background-size: cover;
-	background-color: $background-color;
-	height: 100%;
-	top: 0;
-	left:0;
-	position: fixed;
-	z-index: 4;
-  border-right: 1px solid $divider-color;
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  padding: 20px 40px;
+  background-color: $background-color;
+  border-bottom: 1px solid $divider-color;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  backdrop-filter: blur(8px);
 
   @include mobile {
-    width: 100%;
-    height: auto;
-    padding-bottom: 24px;
-    position: relative;
-    border-bottom: 1px solid $divider-color;
-    border-right: 0;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 16px 20px;
+    position: sticky;
   }
 }
 
-.sidebar {
-  padding: 20px 0;
-
-  @include mobile {
-    text-align: center;
-  }
+.topbar__brand {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: 1;
+  min-width: 260px;
 }
 
-.site-info {
-  text-align:center;
-  margin: 100px auto 0;
+.topbar__avatar {
+  display: block;
+  flex-shrink: 0;
 
-  @include mobile {
-    float: none;
-    display: block;
-    margin: 0 auto;
+  img {
+    width: 72px;
+    height: 72px;
+    border-radius: 16px;
+    object-fit: cover;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
   }
 
-  .site-avatar {
-    margin:0 auto;
-    display: block;
-    max-width: 200px;
-    max-height: 200px;
-
-    @include mobile {
-      max-width: 120px;
-      max-height: 120px;
-    }
-
+  @include mobile {
     img {
-      display: inline-block;
-      border-radius: 2px;
+      width: 56px;
+      height: 56px;
     }
   }
+}
+
+.topbar__text {
+  display: flex;
+  flex-direction: column;
 }
 
 .site-name {
-  margin: 0 auto;
+  margin: 0;
   color: $base-color;
   cursor: pointer;
   font-family: $base-font;
   font-weight: 700;
-  font-size: 28px;
-  letter-spacing: 1px;
+  font-size: 24px;
+  letter-spacing: 0.5px;
+
+  @include mobile {
+    font-size: 20px;
+  }
 }
 
 .site-description {
-  margin: 15px auto;
+  margin: 4px 0 0;
   color: $base-lighten-color;
   font-size: 16px;
 
   @include mobile {
-    margin: 10px auto;
+    font-size: 14px;
   }
 }
 
-.navlist{
-  text-align:center;
-}
-
-nav {
-  display: block;
-  margin-top: 23px; // @TODO: Vertically middle align
+.topbar__nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 16px;
   font-family: $base-font;
   font-weight: 500;
-  font-size: 18px;
+  font-size: 17px;
 
   @include mobile {
-    margin-top: 9px;
-    font-size: 16px;
+    width: 100%;
+    justify-content: flex-start;
+    font-size: 15px;
   }
 
   a {
-    margin: 0 10px;
-    text-align: right;
-    font-weight: 300;
-    letter-spacing: 1px;
+    color: $base-color;
+    padding: 6px 10px;
+    border-radius: 6px;
+    transition: background-color 0.3s ease;
 
-    @include mobile {
-      margin: 0 10px;
+    &:hover,
+    &:focus {
+      background-color: $link-bghv-color;
       color: $link-color;
     }
   }
@@ -428,12 +431,12 @@ nav {
 // content
 
 .wrapper-content {
-  float: right;
-  width: 70%;
+  width: 100%;
+  float: none;
+  padding: 40px 0 0;
 
   @include mobile {
-    float: none;
-    width: 100%;
+    padding-top: 24px;
   }
 }
 
@@ -518,15 +521,21 @@ nav {
 
 .toc {
   width: 240px;
-  height: 100%;
-  left: 30%;
+  max-height: calc(100vh - 200px);
+  right: 24px;
   position: fixed;
+  top: 120px;
   z-index: 4;
-  padding: 60px 20px 0 20px;
-  
+  padding: 20px;
+  border: 1px solid $divider-color;
+  border-radius: 12px;
+  background-color: $background-color;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  overflow: auto;
+
   &:before{
     content:"目录";
-    margin: 0 0 1em 1em;
+    margin: 0 0 1em;
     font-weight: 700;
     font-size: 1.2em;
     display: block;
@@ -539,13 +548,19 @@ nav {
   }
 
   @include mobile{
+    position: static;
+    width: 100%;
+    max-height: none;
+    box-shadow: none;
+    border-radius: 0;
+    margin-top: 20px;
     display:none;
   }
 }
 
 @media screen and (max-width:2200px) and (min-width:1200px){
   .withtoc{
-    padding-left: 260px;
+    padding-right: 260px;
   }
 }
 
@@ -663,13 +678,12 @@ nav {
 
 // Footer
 .wrapper-footer-desktop {
-  margin-top: 50px;
+  margin-top: 60px;
+  padding-top: 40px;
   border-top: 1px solid $footer-border-color;
   background-color: $footer-background-color;
-  position: absolute;
-  clear:both;
-  width:100%;
-  bottom:0;
+  clear: both;
+  width: 100%;
   
   @include mobile {
     display: none;
@@ -683,6 +697,8 @@ nav {
   @include mobile {
     display: block;
     width: 100%;
+    margin-top: 40px;
+    padding-top: 30px;
     border-top: 1px solid $footer-border-color;
     background-color: $footer-background-color;
   }
@@ -737,5 +753,6 @@ footer {
 // ... Otherwise it really bloats up the top of the CSS file and makes it difficult to find the start
 @import "highlights";
 @import "gitalk";
+
 
 
