@@ -10,6 +10,7 @@ toc: true
 
 本文由浅入深详细介绍golang自动注入工具inject
 
+<!-- more -->
 # Inject 依赖注入原理深度教程
 
 ## 📚 目录

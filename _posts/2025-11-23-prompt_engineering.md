@@ -9,6 +9,8 @@ toc: true
 ---
 本文记录Prompt Engineering课程学习记录
 
+<!-- more -->
+
 # Prompt Engineering 课程笔记
 
 https://www.bilibili.com/video/BV1173jzNELG/?spm_id_from=333.1391.0.0&vd_source=7fdf8ec1d7ea5aeaf56c60a03a23c1a7
