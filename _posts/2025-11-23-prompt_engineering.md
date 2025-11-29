@@ -7,6 +7,7 @@ comments: true
 author: xiaodp
 toc: true
 ---
+本文记录Prompt Engineering课程学习记录
 
 # Prompt Engineering 课程笔记
 
